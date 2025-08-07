@@ -1,0 +1,345 @@
+{
+  "info": {
+    "_postman_id": "h3i4j5k6-l85i-97k1-f462-112233220007",
+    "name": "TheMealDB API Collection",
+    "description": "A comprehensive Postman collection for all TheMealDB API v1 endpoints to search, filter, list, and retrieve meal recipes. No API key required. Cache responses to reduce server load. Verified to include all 10 documented endpoints as of August 2025.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Meal by Name",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/search.php?s=chicken",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "search.php"],
+              "query": [
+                {
+                  "key": "s",
+                  "value": "chicken",
+                  "description": "Search term for meal name (URL-encoded, e.g., chicken+curry)"
+                }
+              ]
+            },
+            "description": "Search for meals by name. Returns meals containing the search term in their name. Use URL-encoded strings for multi-word queries (e.g., 'chicken+curry'). Returns null if no matches."
+          }
+        },
+        {
+          "name": "Search Meal by First Letter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/search.php?f=a",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "search.php"],
+              "query": [
+                {
+                  "key": "f",
+                  "value": "a",
+                  "description": "First letter of meal name (a-z, case-insensitive)"
+                }
+              ]
+            },
+            "description": "Search for meals by the first letter of their name. Accepts a single letter (a-z). Returns all meals starting with the specified letter or null if none exist."
+          }
+        },
+        {
+          "name": "Lookup Meal by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/lookup.php?i=52772",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "lookup.php"],
+              "query": [
+                {
+                  "key": "i",
+                  "value": "52772",
+                  "description": "Meal ID (e.g., 52772 for Teriyaki Chicken Casserole)"
+                }
+              ]
+            },
+            "description": "Retrieve details of a specific meal by its ID. Returns full meal details, including ingredients and instructions, or null if the ID is invalid."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filter",
+      "item": [
+        {
+          "name": "Filter by Main Ingredient",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/filter.php?i=chicken_breast",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "filter.php"],
+              "query": [
+                {
+                  "key": "i",
+                  "value": "chicken_breast",
+                  "description": "Main ingredient (URL-encoded, e.g., chicken_breast). Use /list.php?i=list for valid values."
+                }
+              ]
+            },
+            "description": "Filter meals by main ingredient. Returns a list of meals containing the specified ingredient with basic details (id, name, thumbnail). Use /lookup.php for full details."
+          }
+        },
+        {
+          "name": "Filter by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/filter.php?c=Seafood",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "filter.php"],
+              "query": [
+                {
+                  "key": "c",
+                  "value": "Seafood",
+                  "description": "Category name (case-sensitive, e.g., Seafood, Beef). Use /categories.php for valid values."
+                }
+              ]
+            },
+            "description": "Filter meals by category. Returns a list of meals in the specified category with basic details (id, name, thumbnail). Use /lookup.php for full details."
+          }
+        },
+        {
+          "name": "Filter by Area",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/filter.php?a=Italian",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "filter.php"],
+              "query": [
+                {
+                  "key": "a",
+                  "value": "Italian",
+                  "description": "Area/cuisine name (case-sensitive, e.g., Italian, Mexican). Use /list.php?a=list for valid values."
+                }
+              ]
+            },
+            "description": "Filter meals by area/cuisine. Returns a list of meals from the specified area with basic details (id, name, thumbnail). Use /lookup.php for full details."
+          }
+        }
+      ]
+    },
+    {
+      "name": "List",
+      "item": [
+        {
+          "name": "List All Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories.php",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "categories.php"],
+              "query": []
+            },
+            "description": "List all meal categories with details (id, name, thumbnail, description). Returns data under 'categories' key."
+          }
+        },
+        {
+          "name": "List All Areas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/list.php?a=list",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "list.php"],
+              "query": [
+                {
+                  "key": "a",
+                  "value": "list",
+                  "description": "List all areas/cuisines"
+                }
+              ]
+            },
+            "description": "List all areas/cuisines (e.g., Italian, Mexican). Returns data under 'meals' key with 'strArea' field."
+          }
+        },
+        {
+          "name": "List All Ingredients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/list.php?i=list",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "list.php"],
+              "query": [
+                {
+                  "key": "i",
+                  "value": "list",
+                  "description": "List all ingredients"
+                }
+              ]
+            },
+            "description": "List all ingredients with details (id, name, description, type). Returns data under 'meals' key with 'strIngredient' and 'strDescription' fields."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Random",
+      "item": [
+        {
+          "name": "Get Random Meal",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/random.php",
+              "protocol": "https",
+              "host": ["www", "themealdb", "com"],
+              "path": ["api", "json", "v1", "1", "random.php"],
+              "query": []
+            },
+            "description": "Retrieve a single random meal with full details (id, name, ingredients, instructions)."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://www.themealdb.com/api/json/v1/1",
+      "description": "Base URL for TheMealDB API v1"
+    }
+  ]
+}

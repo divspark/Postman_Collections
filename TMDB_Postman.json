@@ -1,0 +1,2427 @@
+{
+  "info": {
+    "_postman_id": "i4j5k6l7-m96j-08l2-g573-223344330008",
+    "name": "TMDB API v3 Collection",
+    "description": "A complete Postman collection for all The Movie Database (TMDB) API v3 endpoints to access movie, TV show, actor, and related data. Requires an API key for all requests and a session ID for account-related actions. Cache responses to respect rate limits (40 requests per 10 seconds). Verified to include all documented endpoints as of August 2025.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Create Guest Session",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/authentication/guest_session/new?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "authentication", "guest_session", "new"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ]
+            },
+            "description": "Create a guest session to perform actions like rating movies without a user account. Returns a guest_session_id."
+          }
+        },
+        {
+          "name": "Create Request Token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/authentication/token/new?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "authentication", "token", "new"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ]
+            },
+            "description": "Create a request token for user authentication. Redirect user to approve at https://www.themoviedb.org/authenticate/{request_token}."
+          }
+        },
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"request_token\": \"YOUR_REQUEST_TOKEN\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/authentication/session/new?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "authentication", "session", "new"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ]
+            },
+            "description": "Create a session ID after user approves the request token. Returns a session_id."
+          }
+        },
+        {
+          "name": "Create Session with Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"YOUR_USERNAME\", \"password\": \"YOUR_PASSWORD\", \"request_token\": \"YOUR_REQUEST_TOKEN\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/authentication/token/validate_with_login?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "authentication", "token", "validate_with_login"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ]
+            },
+            "description": "Validate a request token with user credentials. Use before creating a session."
+          }
+        },
+        {
+          "name": "Delete Session",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"session_id\": \"YOUR_SESSION_ID\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/authentication/session?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "authentication", "session"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ]
+            },
+            "description": "Delete a session to log out a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get Account Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ]
+            },
+            "description": "Get account details for the authenticated user. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get Account Favorite Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/favorite/movies?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "favorite", "movies"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get favorite movies for an account. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Favorite TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/favorite/tv?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "favorite", "tv"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get favorite TV shows for an account. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Mark as Favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"media_type\": \"movie\", \"media_id\": 550, \"favorite\": true}"
+            },
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/favorite?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "favorite"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Add or remove a movie or TV show from favorites. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Rated Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/rated/movies?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "rated", "movies"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get movies rated by the account. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Rated TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/rated/tv?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "rated", "tv"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get TV shows rated by the account. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Rated TV Episodes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/rated/tv/episodes?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "rated", "tv", "episodes"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get TV episodes rated by the account. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Watchlist Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/watchlist/movies?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "watchlist", "movies"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get movies in the account's watchlist. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Get Account Watchlist TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/watchlist/tv?api_key={{api_key}}&session_id={{session_id}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "watchlist", "tv"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Get TV shows in the account's watchlist. Requires a session_id and account_id."
+          }
+        },
+        {
+          "name": "Add to Watchlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"media_type\": \"movie\", \"media_id\": 550, \"watchlist\": true}"
+            },
+            "url": {
+              "raw": "{{base_url}}/account/{{account_id}}/watchlist?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "account", "{{account_id}}", "watchlist"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "YOUR_ACCOUNT_ID",
+                  "description": "Account ID from /account endpoint"
+                }
+              ]
+            },
+            "description": "Add or remove a movie or TV show from the watchlist. Requires a session_id and account_id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "Get Movie Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id?api_key={{api_key}}&language=en-US&append_to_response=credits,images,videos",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "append_to_response",
+                  "value": "credits,images,videos",
+                  "description": "Additional endpoints (e.g., credits,images,videos)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID (e.g., 550 for Fight Club)"
+                }
+              ]
+            },
+            "description": "Get details for a movie by ID, including title, plot, genres. Use append_to_response to include related data."
+          }
+        },
+        {
+          "name": "Get Movie Account States",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/account_states?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "account_states"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get account states (favorite, watchlist, rated) for a movie. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get Movie Alternative Titles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/alternative_titles?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "alternative_titles"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get alternative titles for a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Credits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/credits?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "credits"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get cast and crew credits for a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie External IDs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/external_ids?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "external_ids"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get external IDs (e.g., IMDb, Facebook) for a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Images",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/images?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "images"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get images (posters, backdrops) for a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Keywords",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/keywords?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "keywords"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get keywords associated with a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/recommendations?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "recommendations"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get recommended movies based on a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Similar",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/similar?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "similar"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get similar movies based on a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/reviews?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "reviews"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get user reviews for a specific movie."
+          }
+        },
+        {
+          "name": "Get Movie Lists",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/lists?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "lists"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Get lists that include a specific movie."
+          }
+        },
+        {
+          "name": "Rate Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"value\": 8.5}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/rating?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "rating"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Rate a movie. Requires a session_id. Value must be between 0.5 and 10.0."
+          }
+        },
+        {
+          "name": "Delete Movie Rating",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/:movie_id/rating?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", ":movie_id", "rating"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "movie_id",
+                  "value": "550",
+                  "description": "Movie ID"
+                }
+              ]
+            },
+            "description": "Delete a movie rating. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get Latest Movie",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/latest?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", "latest"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ]
+            },
+            "description": "Get the most recently added movie."
+          }
+        },
+        {
+          "name": "Get Now Playing Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/now_playing?api_key={{api_key}}&language=en-US&page=1&region=US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", "now_playing"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "region",
+                  "value": "US",
+                  "description": "Region code (e.g., US, GB)"
+                }
+              ]
+            },
+            "description": "Get movies currently playing in theaters."
+          }
+        },
+        {
+          "name": "Get Popular Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/popular?api_key={{api_key}}&language=en-US&page=1&region=US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", "popular"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "region",
+                  "value": "US",
+                  "description": "Region code (e.g., US, GB)"
+                }
+              ]
+            },
+            "description": "Get currently popular movies."
+          }
+        },
+        {
+          "name": "Get Top Rated Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/top_rated?api_key={{api_key}}&language=en-US&page=1&region=US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", "top_rated"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "region",
+                  "value": "US",
+                  "description": "Region code (e.g., US, GB)"
+                }
+              ]
+            },
+            "description": "Get top-rated movies."
+          }
+        },
+        {
+          "name": "Get Upcoming Movies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movie/upcoming?api_key={{api_key}}&language=en-US&page=1&region=US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "movie", "upcoming"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "region",
+                  "value": "US",
+                  "description": "Region code (e.g., US, GB)"
+                }
+              ]
+            },
+            "description": "Get upcoming movies."
+          }
+        }
+      ]
+    },
+    {
+      "name": "TV Shows",
+      "item": [
+        {
+          "name": "Get TV Show Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id?api_key={{api_key}}&language=en-US&append_to_response=credits,images,videos",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "append_to_response",
+                  "value": "credits,images,videos",
+                  "description": "Additional endpoints to include"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID (e.g., 1399 for Game of Thrones)"
+                }
+              ]
+            },
+            "description": "Get details for a TV show by ID."
+          }
+        },
+        {
+          "name": "Get TV Show Account States",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/account_states?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "account_states"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get account states (favorite, watchlist, rated) for a TV show. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get TV Show Alternative Titles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/alternative_titles?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "alternative_titles"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get alternative titles for a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Credits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/credits?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "credits"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get cast and crew credits for a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show External IDs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/external_ids?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "external_ids"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get external IDs for a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Images",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/images?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "images"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get images (posters, backdrops) for a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Keywords",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/keywords?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "keywords"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get keywords associated with a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/recommendations?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "recommendations"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get recommended TV shows based on a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Similar",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/similar?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "similar"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get similar TV shows based on a specific TV show."
+          }
+        },
+        {
+          "name": "Get TV Show Videos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/videos?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "videos"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Get videos (trailers, teasers) for a specific TV show."
+          }
+        },
+        {
+          "name": "Rate TV Show",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"value\": 8.5}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/rating?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "rating"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Rate a TV show. Requires a session_id. Value must be between 0.5 and 10.0."
+          }
+        },
+        {
+          "name": "Delete TV Show Rating",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/rating?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "rating"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                }
+              ]
+            },
+            "description": "Delete a TV show rating. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get Airing Today TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/airing_today?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", "airing_today"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Get TV shows airing today."
+          }
+        },
+        {
+          "name": "Get On Air TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/on_the_air?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", "on_the_air"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Get TV shows currently on the air."
+          }
+        },
+        {
+          "name": "Get Popular TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/popular?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", "popular"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Get currently popular TV shows."
+          }
+        },
+        {
+          "name": "Get Top Rated TV Shows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/top_rated?api_key={{api_key}}&language=en-US&page=1",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", "top_rated"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Get top-rated TV shows."
+          }
+        }
+      ]
+    },
+    {
+      "name": "TV Seasons",
+      "item": [
+        {
+          "name": "Get TV Season Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/season/:season_number?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "season", ":season_number"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                },
+                {
+                  "key": "season_number",
+                  "value": "1",
+                  "description": "Season number"
+                }
+              ]
+            },
+            "description": "Get details for a specific TV show season."
+          }
+        },
+        {
+          "name": "Get TV Season Account States",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/season/:season_number/account_states?api_key={{api_key}}&session_id={{session_id}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "season", ":season_number", "account_states"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "session_id",
+                  "value": "{{session_id}}",
+                  "description": "Authenticated session ID"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                },
+                {
+                  "key": "season_number",
+                  "value": "1",
+                  "description": "Season number"
+                }
+              ]
+            },
+            "description": "Get account states (rated) for a TV season. Requires a session_id."
+          }
+        },
+        {
+          "name": "Get TV Season Credits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/season/:season_number/credits?api_key={{api_key}}&language=en-US",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "season", ":season_number", "credits"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US",
+                  "description": "Language code (e.g., en-US, fr-FR)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                },
+                {
+                  "key": "season_number",
+                  "value": "1",
+                  "description": "Season number"
+                }
+              ]
+            },
+            "description": "Get cast and crew credits for a specific TV season."
+          }
+        },
+        {
+          "name": "Get TV Season External IDs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tv/:tv_id/season/:season_number/external_ids?api_key={{api_key}}",
+              "protocol": "https",
+              "host": ["api", "themoviedb", "org"],
+              "path": ["3", "tv", ":tv_id", "season", ":season_number", "external_ids"],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "{{api_key}}",
+                  "description": "Your TMDB API key"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "tv_id",
+                  "value": "1399",
+                  "description": "TV show ID"
+                },
+                {
+                  "key": "season_number",
+                  "value": "1",
+                  "description": "Season number"
+                }
+              ]
+            },
+            "description": "Get external IDs for a specific TV season."
+          }
+        }
+        ]
+    }
+  ],
+   "variable": [
+      {
+        "key": "base_url",
+        "value": "https://api.themoviedb.org",
+        "type": "string"
+      },
+      {
+        "key": "api_key",
+        "value": "<YOUR_API_KEY>",
+        "type": "string"
+      },
+      {
+        "key": "session_id",
+        "value": "<YOUR_SESSION_ID>",
+        "type": "string"
+      }
+    ]
+  }
