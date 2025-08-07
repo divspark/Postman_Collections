@@ -1,0 +1,438 @@
+{
+  "info": {
+    "_postman_id": "k1m2n3p4-q5r6-s7t8-u9v0-001122334455",
+    "name": "Twitch API Collection",
+    "description": "A Postman collection for the Twitch Helix API, providing access to users, streams, games, clips, and follows. Uses https://api.twitch.tv/helix/ as the base URL. Requires OAuth 2.0 access token and Client ID from https://dev.twitch.tv/console. JSON responses. Free tier offers 800 rate limit points/minute as of August 2025. Users must set up OAuth flow in Postman or provide a valid access token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}users?login=twitchdev",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "users"],
+              "query": [
+                {
+                  "key": "login",
+                  "value": "twitchdev",
+                  "description": "User login name (e.g., twitchdev)"
+                }
+              ]
+            },
+            "description": "Retrieve details of users by login name or ID."
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}users",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "users"]
+            },
+            "description": "Retrieve details of the authenticated user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Streams",
+      "item": [
+        {
+          "name": "Get Streams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}streams?user_login=twitchdev&first=10",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "streams"],
+              "query": [
+                {
+                  "key": "user_login",
+                  "value": "twitchdev",
+                  "description": "Filter by user login (e.g., twitchdev)"
+                },
+                {
+                  "key": "first",
+                  "value": "10",
+                  "description": "Number of results (1-100)"
+                }
+              ]
+            },
+            "description": "Retrieve live streams by user login, game, or language with pagination."
+          }
+        },
+        {
+          "name": "Get Stream Tags",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}streams/tags?broadcaster_id=141981764",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "streams", "tags"],
+              "query": [
+                {
+                  "key": "broadcaster_id",
+                  "value": "141981764",
+                  "description": "Broadcaster ID (e.g., 141981764 for twitchdev)"
+                }
+              ]
+            },
+            "description": "Retrieve tags associated with a specific stream."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "item": [
+        {
+          "name": "Get Top Games",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}games/top?first=10",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "games", "top"],
+              "query": [
+                {
+                  "key": "first",
+                  "value": "10",
+                  "description": "Number of results (1-100)"
+                }
+              ]
+            },
+            "description": "Retrieve top games on Twitch with pagination."
+          }
+        },
+        {
+          "name": "Get Game by Name",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}games?name=Fortnite",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "games"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Fortnite",
+                  "description": "Game name (e.g., Fortnite)"
+                }
+              ]
+            },
+            "description": "Retrieve details of a specific game by name or ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clips",
+      "item": [
+        {
+          "name": "Get Clips",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}clips?broadcaster_id=141981764&first=10",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "clips"],
+              "query": [
+                {
+                  "key": "broadcaster_id",
+                  "value": "141981764",
+                  "description": "Broadcaster ID (e.g., 141981764 for twitchdev)"
+                },
+                {
+                  "key": "first",
+                  "value": "10",
+                  "description": "Number of results (1-100)"
+                }
+              ]
+            },
+            "description": "Retrieve clips for a broadcaster, game, or clip ID with pagination."
+          }
+        },
+        {
+          "name": "Create Clip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}clips?broadcaster_id=141981764",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "clips"],
+              "query": [
+                {
+                  "key": "broadcaster_id",
+                  "value": "141981764",
+                  "description": "Broadcaster ID (e.g., 141981764 for twitchdev)"
+                }
+              ]
+            },
+            "description": "Create a clip for a broadcaster’s stream. Requires scope: clips:edit."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Follows",
+      "item": [
+        {
+          "name": "Get Followed Channels",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}channels/followed?user_id=141981764&first=10",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "channels", "followed"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "141981764",
+                  "description": "User ID (e.g., 141981764 for twitchdev)"
+                },
+                {
+                  "key": "first",
+                  "value": "10",
+                  "description": "Number of results (1-100)"
+                }
+              ]
+            },
+            "description": "Retrieve channels followed by a user with pagination. Requires scope: user:read:follows."
+          }
+        },
+        {
+          "name": "Get Channel Followers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Client-Id",
+                "value": "{{client_id}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}channels/followers?broadcaster_id=141981764&first=10",
+              "protocol": "https",
+              "host": ["api", "twitch", "tv"],
+              "path": ["helix", "channels", "followers"],
+              "query": [
+                {
+                  "key": "broadcaster_id",
+                  "value": "141981764",
+                  "description": "Broadcaster ID (e.g., 141981764 for twitchdev)"
+                },
+                {
+                  "key": "first",
+                  "value": "10",
+                  "description": "Number of results (1-100)"
+                }
+              ]
+            },
+            "description": "Retrieve followers of a specific channel with pagination."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.twitch.tv/helix/",
+      "type": "string",
+      "description": "Base URL for Twitch Helix API"
+    },
+    {
+      "key": "client_id",
+      "value": "YOUR_CLIENT_ID",
+      "type": "string",
+      "description": "Your Twitch Client ID"
+    },
+    {
+      "key": "access_token",
+      "value": "YOUR_ACCESS_TOKEN",
+      "type": "string",
+      "description": "OAuth 2.0 access token for Twitch API"
+    }
+  ]
+}

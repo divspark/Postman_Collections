@@ -1,0 +1,640 @@
+{
+  "info": {
+    "_postman_id": "u0v1w2x3-y4z5-a6b7-c8d9-778899001234",
+    "name": "GitHub REST API Collection",
+    "description": "A comprehensive Postman collection for GitHub REST API (v3), covering Users, Repositories, Issues, Pull Requests, Search, and Commits. Uses https://api.github.com/ as the base URL. Requires a Personal Access Token or OAuth 2.0 token for authentication, passed as Bearer token. Supports JSON responses and pagination. Ideal for developer tools and automation projects. Free tier offers 5,000 requests/hour for authenticated users as of August 2025, based on official documentation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get a User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}users/octocat",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["users", "octocat"]
+            },
+            "description": "Retrieve details of a specific user by username (e.g., octocat)."
+          }
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}users?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List all users with pagination support."
+          }
+        },
+        {
+          "name": "List User Repositories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}users/octocat/repos?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["users", "octocat", "repos"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List public repositories for a specific user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Repositories",
+      "item": [
+        {
+          "name": "Create a Repository",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"test-repo\", \"description\": \"A test repository\", \"private\": false}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}user/repos",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["user", "repos"]
+            },
+            "description": "Create a new repository for the authenticated user."
+          }
+        },
+        {
+          "name": "Get a Repository",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world"]
+            },
+            "description": "Retrieve details of a specific repository by owner and repo name."
+          }
+        },
+        {
+          "name": "List Repositories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}user/repos?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["user", "repos"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List repositories for the authenticated user with pagination."
+          }
+        },
+        {
+          "name": "Update a Repository",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"description\": \"Updated description for test repository\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world"]
+            },
+            "description": "Update a repository’s details, e.g., description or visibility."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Issues",
+      "item": [
+        {
+          "name": "Create an Issue",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"New issue\", \"body\": \"This is a test issue\", \"labels\": [\"bug\"]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/issues",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "issues"]
+            },
+            "description": "Create a new issue in a specific repository."
+          }
+        },
+        {
+          "name": "Get an Issue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/issues/1",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "issues", "1"]
+            },
+            "description": "Retrieve details of a specific issue by number."
+          }
+        },
+        {
+          "name": "Update an Issue",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated issue title\", \"state\": \"closed\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/issues/1",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "issues", "1"]
+            },
+            "description": "Update an issue’s title, body, or state."
+          }
+        },
+        {
+          "name": "List Issues for a Repository",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/issues?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "issues"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List all issues for a specific repository with pagination."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pull Requests",
+      "item": [
+        {
+          "name": "Create a Pull Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"New pull request\", \"head\": \"feature-branch\", \"base\": \"main\", \"body\": \"This is a test PR\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/pulls",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "pulls"]
+            },
+            "description": "Create a new pull request in a specific repository."
+          }
+        },
+        {
+          "name": "Get a Pull Request",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/pulls/1",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "pulls", "1"]
+            },
+            "description": "Retrieve details of a specific pull request by number."
+          }
+        },
+        {
+          "name": "List Pull Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/pulls?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "pulls"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List all pull requests for a specific repository with pagination."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Repositories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}search/repositories?q=tetris&per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["search", "repositories"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "tetris",
+                  "description": "Search query (e.g., tetris)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "Search for repositories by keyword with pagination."
+          }
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}search/users?q=octocat&per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["search", "users"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "octocat",
+                  "description": "Search query (e.g., octocat)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "Search for users by keyword with pagination."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commits",
+      "item": [
+        {
+          "name": "List Commits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/commits?per_page=10",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "commits"],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results per page (max 100)"
+                }
+              ]
+            },
+            "description": "List commits for a specific repository with pagination."
+          }
+        },
+        {
+          "name": "Get a Commit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.github+json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}repos/octocat/hello-world/commits/sha123456789",
+              "protocol": "https",
+              "host": ["api", "github", "com"],
+              "path": ["repos", "octocat", "hello-world", "commits", "sha123456789"]
+            },
+            "description": "Retrieve details of a specific commit by SHA."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.github.com/",
+      "type": "string",
+      "description": "Base URL for GitHub REST API"
+    },
+    {
+      "key": "access_token",
+      "value": "YOUR_PERSONAL_ACCESS_TOKEN",
+      "type": "string",
+      "description": "Your GitHub Personal Access Token or OAuth token"
+    }
+  ]
+}
