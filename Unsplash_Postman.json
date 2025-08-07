@@ -1,0 +1,659 @@
+{
+  "info": {
+    "_postman_id": "a7b8c9d0-e29b-41d4-a716-446655440001",
+    "name": "Unsplash API Collection",
+    "description": "A Postman collection for all Unsplash API endpoints to interact with photos, collections, users, and more.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Photos",
+      "item": [
+        {
+          "name": "List Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of photos."
+          }
+        },
+        {
+          "name": "Get Random Photo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos/random?count=1",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos", "random"],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Retrieve a random photo."
+          }
+        },
+        {
+          "name": "Get Photo by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos/:id",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "Dwu85P9SOIk",
+                  "description": "Photo ID"
+                }
+              ]
+            },
+            "description": "Retrieve details for a specific photo."
+          }
+        },
+        {
+          "name": "Track Photo Download",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos/:id/download",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos", ":id", "download"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "Dwu85P9SOIk",
+                  "description": "Photo ID"
+                }
+              ]
+            },
+            "description": "Track the number of times a photo has been downloaded."
+          }
+        },
+        {
+          "name": "Like Photo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos/:id/like",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos", ":id", "like"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "Dwu85P9SOIk",
+                  "description": "Photo ID"
+                }
+              ]
+            },
+            "description": "Like a photo on behalf of the authenticated user. Requires write_likes scope."
+          }
+        },
+        {
+          "name": "Unlike Photo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/photos/:id/like",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["photos", ":id", "like"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "Dwu85P9SOIk",
+                  "description": "Photo ID"
+                }
+              ]
+            },
+            "description": "Unlike a photo on behalf of the authenticated user. Requires write_likes scope."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Collections",
+      "item": [
+        {
+          "name": "List Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/collections?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of collections."
+          }
+        },
+        {
+          "name": "List Featured Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/collections/featured?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections", "featured"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of featured collections."
+          }
+        },
+        {
+          "name": "Get Collection",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/collections/:id",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12345",
+                  "description": "Collection ID"
+                }
+              ]
+            },
+            "description": "Retrieve details for a specific collection."
+          }
+        },
+        {
+          "name": "Get Collection Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/collections/:id/photos?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections", ":id", "photos"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12345",
+                  "description": "Collection ID"
+                }
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve photos in a specific collection."
+          }
+        },
+        {
+          "name": "Add Photo to Collection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"photo_id\": \"Dwu85P9SOIk\"}"
+            },
+            "url": {
+              "raw": "https://api.unsplash.com/collections/:id/add",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections", ":id", "add"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12345",
+                  "description": "Collection ID"
+                }
+              ]
+            },
+            "description": "Add a photo to a collection. Requires write_collections scope."
+          }
+        },
+        {
+          "name": "Remove Photo from Collection",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/collections/:id/remove?photo_id=Dwu85P9SOIk",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["collections", ":id", "remove"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12345",
+                  "description": "Collection ID"
+                }
+              ],
+              "query": [
+                {
+                  "key": "photo_id",
+                  "value": "Dwu85P9SOIk"
+                }
+              ]
+            },
+            "description": "Remove a photo from a collection. Requires write_collections scope."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/users/:username",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["users", ":username"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "exampleuser",
+                  "description": "User's username"
+                }
+              ]
+            },
+            "description": "Retrieve a user's public profile."
+          }
+        },
+        {
+          "name": "Get User Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/users/:username/photos?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["users", ":username", "photos"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "exampleuser",
+                  "description": "User's username"
+                }
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of photos uploaded by a user."
+          }
+        },
+        {
+          "name": "Get User Likes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/users/:username/likes?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["users", ":username", "likes"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "exampleuser",
+                  "description": "User's username"
+                }
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of photos liked by a user."
+          }
+        },
+        {
+          "name": "Get User Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/users/:username/collections?page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["users", ":username", "collections"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "exampleuser",
+                  "description": "User's username"
+                }
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve a list of collections created by a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/search/photos?query=mountains&page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["search", "photos"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "mountains"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Search for photos based on a query."
+          }
+        },
+        {
+          "name": "Search Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/search/collections?query=office&page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["search", "collections"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "office"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Search for collections based on a query."
+          }
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/search/users?query=nas&page=1&per_page=10",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["search", "users"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "nas"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Search for users based on a query."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistics",
+      "item": [
+        {
+          "name": "Get Total Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Client-ID YOUR_ACCESS_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.unsplash.com/stats/total",
+              "protocol": "https",
+              "host": ["api", "unsplash", "com"],
+              "path": ["stats", "total"]
+            },
+            "description": "Retrieve total counts for Unsplash stats."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.unsplash.com",
+      "description": "Base URL for Unsplash API"
+    }
+  ]
+}

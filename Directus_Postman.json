@@ -1,0 +1,1210 @@
+{
+  "info": {
+    "_postman_id": "f1g2h3i4-j63f-75h8-d149-889099880005",
+    "name": "Directus API Collection",
+    "description": "A comprehensive Postman collection for all Directus REST API endpoints to manage items, files, users, authentication, and more. Replace YOUR_ACCESS_TOKEN with a valid Bearer token and :collection/:id with specific collection names and IDs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"user@example.com\", \"password\": \"password\", \"mode\": \"json\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["auth", "login"],
+              "query": []
+            },
+            "description": "Authenticate a user and return an access token and refresh token. Set mode to 'cookie' for httpOnly cookie response."
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"refresh_token\": \"YOUR_REFRESH_TOKEN\", \"mode\": \"json\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["auth", "refresh"],
+              "query": []
+            },
+            "description": "Refresh an access token using a refresh token. Set mode to 'cookie' for httpOnly cookie response."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"refresh_token\": \"YOUR_REFRESH_TOKEN\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["auth", "logout"],
+              "query": []
+            },
+            "description": "Log out a user by invalidating the refresh token."
+          }
+        },
+        {
+          "name": "Password Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"user@example.com\", \"reset_url\": \"https://example.com/reset\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/password/request",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["auth", "password", "request"],
+              "query": []
+            },
+            "description": "Request a password reset email. Requires PASSWORD_RESET_URL_ALLOW_LIST in .env."
+          }
+        },
+        {
+          "name": "Password Reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"token\": \"YOUR_RESET_TOKEN\", \"password\": \"newpassword\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/password/reset",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["auth", "password", "reset"],
+              "query": []
+            },
+            "description": "Reset a user’s password using a reset token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Items",
+      "item": [
+        {
+          "name": "Get Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/items/:collection?fields=*&limit=10&page=1",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection"],
+              "query": [
+                {
+                  "key": "fields",
+                  "value": "*",
+                  "description": "Control returned fields (e.g., id,title)"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items to return (max defined by queryLimit.max)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Retrieve a list of items from a given collection. Supports fields, filter, sort, limit, offset, and search parameters."
+          }
+        },
+        {
+          "name": "Get Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/items/:collection/:id?fields=*",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection", ":id"],
+              "query": [
+                {
+                  "key": "fields",
+                  "value": "*",
+                  "description": "Control returned fields (e.g., id,title)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Item ID"
+                }
+              ]
+            },
+            "description": "Retrieve a specific item by ID from a given collection."
+          }
+        },
+        {
+          "name": "Create Items",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[{\"title\": \"Hello World\", \"content\": \"This is a test article\"}]"
+            },
+            "url": {
+              "raw": "{{base_url}}/items/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Create one or multiple items in a given collection. Use array for bulk creation."
+          }
+        },
+        {
+          "name": "Update Items",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated Title\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/items/:collection/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection", ":id"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Item ID"
+                }
+              ]
+            },
+            "description": "Update a specific item by ID. Use raw JSON for body; booleans must be strings (e.g., \"true\")."
+          }
+        },
+        {
+          "name": "Delete Items",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/items/:collection/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection", ":id"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Item ID"
+                }
+              ]
+            },
+            "description": "Delete a specific item by ID from a given collection."
+          }
+        },
+        {
+          "name": "Get Item Revisions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/items/:collection/:id/revisions",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection", ":id", "revisions"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Item ID"
+                }
+              ]
+            },
+            "description": "Retrieve revisions for a specific item by ID."
+          }
+        },
+        {
+          "name": "Revert Item Revision",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/items/:collection/:id/revert/:revision",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["items", ":collection", ":id", "revert", ":revision"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Item ID"
+                },
+                {
+                  "key": "revision",
+                  "value": "1",
+                  "description": "Revision ID"
+                }
+              ]
+            },
+            "description": "Revert an item to a specific revision."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "item": [
+        {
+          "name": "Get Files",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/files?fields=*&limit=10&page=1",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["files"],
+              "query": [
+                {
+                  "key": "fields",
+                  "value": "*",
+                  "description": "Control returned fields"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of files to return"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Retrieve a list of files. Supports fields, filter, sort, limit, and offset parameters."
+          }
+        },
+        {
+          "name": "Get File by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/files/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["files", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "File ID"
+                }
+              ]
+            },
+            "description": "Retrieve a specific file by ID."
+          }
+        },
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "File to upload"
+                },
+                {
+                  "key": "title",
+                  "value": "Sample Image",
+                  "type": "text",
+                  "description": "File title"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/files",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["files"]
+            },
+            "description": "Upload a new file. Use multipart/form-data for file uploads."
+          }
+        },
+        {
+          "name": "Update File",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated Image Title\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/files/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["files", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "File ID"
+                }
+              ]
+            },
+            "description": "Update a file’s metadata by ID."
+          }
+        },
+        {
+          "name": "Delete File",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/files/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["files", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "File ID"
+                }
+              ]
+            },
+            "description": "Delete a specific file by ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?fields=*&limit=10&page=1",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "fields",
+                  "value": "*",
+                  "description": "Control returned fields"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of users to return"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ]
+            },
+            "description": "Retrieve a list of users. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Retrieve a specific user by ID. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"newuser@example.com\", \"password\": \"password\", \"role\": \"ROLE_ID\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["users"]
+            },
+            "description": "Create a new user. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"updateduser@example.com\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Update a user’s details by ID. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Delete a user by ID. Requires admin permissions."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Collections",
+      "item": [
+        {
+          "name": "Get Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/collections",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["collections"]
+            },
+            "description": "Retrieve a list of collections. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Get Collection by Name",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/collections/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["collections", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Retrieve a specific collection by name. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Create Collection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"collection\": \"new_collection\", \"fields\": [{\"field\": \"title\", \"type\": \"string\"}]}"
+            },
+            "url": {
+              "raw": "{{base_url}}/collections",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["collections"]
+            },
+            "description": "Create a new collection. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Update Collection",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"meta\": {\"note\": \"Updated collection note\"}}"
+            },
+            "url": {
+              "raw": "{{base_url}}/collections/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["collections", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Update a collection’s metadata. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Delete Collection",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/collections/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["collections", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Delete a collection. Requires admin permissions."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fields",
+      "item": [
+        {
+          "name": "Get Fields",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/fields/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["fields", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Retrieve fields for a specific collection. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Create Field",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"field\": \"new_field\", \"type\": \"string\", \"meta\": {\"required\": true}}"
+            },
+            "url": {
+              "raw": "{{base_url}}/fields/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["fields", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Create a new field in a collection. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Update Field",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"meta\": {\"note\": \"Updated field note\"}}"
+            },
+            "url": {
+              "raw": "{{base_url}}/fields/:collection/:field",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["fields", ":collection", ":field"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "field",
+                  "value": "title",
+                  "description": "Field name"
+                }
+              ]
+            },
+            "description": "Update a field in a collection. Requires admin permissions."
+          }
+        },
+        {
+          "name": "Delete Field",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/fields/:collection/:field",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["fields", ":collection", ":field"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                },
+                {
+                  "key": "field",
+                  "value": "title",
+                  "description": "Field name"
+                }
+              ]
+            },
+            "description": "Delete a field from a collection. Requires admin permissions."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Server",
+      "item": [
+        {
+          "name": "Ping Server",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/server/ping",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["server", "ping"]
+            },
+            "description": "Check if the server is running. No authentication required."
+          }
+        },
+        {
+          "name": "Server Health",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/server/health",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["server", "health"]
+            },
+            "description": "Get the current health status of the server. Admin authentication required for detailed output."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Utilities",
+      "item": [
+        {
+          "name": "Import Data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "JSON or CSV file to import"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/utils/import/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["utils", "import", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Import multiple records from a JSON or CSV file into a collection."
+          }
+        },
+        {
+          "name": "Export Data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\": {\"filter\": {\"field\": {\"eq\": \"value\"}}}, \"format\": \"json\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/utils/export/:collection",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["utils", "export", ":collection"],
+              "variable": [
+                {
+                  "key": "collection",
+                  "value": "articles",
+                  "description": "Collection name"
+                }
+              ]
+            },
+            "description": "Export a dataset to a file in the file library."
+          }
+        },
+        {
+          "name": "Generate Hash",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"string\": \"text_to_hash\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/utils/hash/generate",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["utils", "hash", "generate"]
+            },
+            "description": "Generate a hash for a given string."
+          }
+        },
+        {
+          "name": "Clear Cache",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ACCESS_TOKEN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/utils/cache/clear",
+              "protocol": "https",
+              "host": ["{{directus_host}}"],
+              "path": ["utils", "cache", "clear"]
+            },
+            "description": "Clear the data cache. Admin permissions required."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://directus.example.com",
+      "description": "Base URL for Directus API"
+    },
+    {
+      "key": "directus_host",
+      "value": "directus.example.com",
+      "description": "Directus project host"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "info": {
+    "_postman_id": "e0f1g3h4-i52e-64g7-c038-778988770004",
+    "name": "Pixabay API Collection",
+    "description": "A Postman collection for all Pixabay API endpoints to search and retrieve free images and videos. Updated to reflect the latest documentation, covering image and video search endpoints. Cache responses for 24 hours to comply with API guidelines.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Images",
+      "item": [
+        {
+          "name": "Search Images",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://pixabay.com/api/?key=YOUR_API_KEY&q=flowers&lang=en&image_type=photo&category=nature&order=popular&page=1&per_page=20",
+              "protocol": "https",
+              "host": ["pixabay", "com"],
+              "path": ["api", ""],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Pixabay API key (required)"
+                },
+                {
+                  "key": "q",
+                  "value": "flowers",
+                  "description": "Search term (URL-encoded, e.g., yellow+flowers)"
+                },
+                {
+                  "key": "lang",
+                  "value": "en",
+                  "description": "Language code (e.g., en, de, fr)"
+                },
+                {
+                  "key": "image_type",
+                  "value": "photo",
+                  "description": "Image type (all, photo, illustration, vector)"
+                },
+                {
+                  "key": "category",
+                  "value": "nature",
+                  "description": "Category (e.g., nature, people, animals)"
+                },
+                {
+                  "key": "order",
+                  "value": "popular",
+                  "description": "Sort order (popular, latest)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default 1)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Results per page (3-200, default 20)"
+                },
+                {
+                  "key": "min_width",
+                  "value": null,
+                  "description": "Minimum image width (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "min_height",
+                  "value": null,
+                  "description": "Minimum image height (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "colors",
+                  "value": null,
+                  "description": "Filter by color (e.g., red, blue, transparent)",
+                  "disabled": true
+                },
+                {
+                  "key": "editors_choice",
+                  "value": null,
+                  "description": "True for editor-curated images (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "safesearch",
+                  "value": null,
+                  "description": "True to filter out sensitive content (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "orientation",
+                  "value": null,
+                  "description": "Image orientation (horizontal, vertical, all)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Search for images based on a query. Supports parameters like image_type, category, lang, order, page, per_page, min_width, min_height, colors, editors_choice, safesearch, and orientation. Cache responses for 24 hours."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "Search Videos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://pixabay.com/api/videos/?key=YOUR_API_KEY&q=beach&lang=en&video_type=film&category=nature&order=popular&page=1&per_page=20",
+              "protocol": "https",
+              "host": ["pixabay", "com"],
+              "path": ["api", "videos", ""],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Pixabay API key (required)"
+                },
+                {
+                  "key": "q",
+                  "value": "beach",
+                  "description": "Search term (URL-encoded, e.g., yellow+flowers)"
+                },
+                {
+                  "key": "lang",
+                  "value": "en",
+                  "description": "Language code (e.g., en, de, fr)"
+                },
+                {
+                  "key": "video_type",
+                  "value": "film",
+                  "description": "Video type (all, film, animation)"
+                },
+                {
+                  "key": "category",
+                  "value": "nature",
+                  "description": "Category (e.g., nature, people, animals)"
+                },
+                {
+                  "key": "order",
+                  "value": "popular",
+                  "description": "Sort order (popular, latest)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default 1)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Results per page (3-200, default 20)"
+                },
+                {
+                  "key": "min_width",
+                  "value": null,
+                  "description": "Minimum video width (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "min_height",
+                  "value": null,
+                  "description": "Minimum video height (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "safesearch",
+                  "value": null,
+                  "description": "True to filter out sensitive content (optional)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Search for videos based on a query. Supports parameters like video_type, category, lang, order, page, per_page, min_width, min_height, and safesearch. Cache responses for 24 hours."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://pixabay.com/api",
+      "description": "Base URL for Pixabay API"
+    }
+  ]
+}

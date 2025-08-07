@@ -1,0 +1,535 @@
+{
+  "info": {
+    "_postman_id": "c9d0e2f3-g41d-53f6-b927-667877660003",
+    "name": "Tenor GIF API Collection",
+    "description": "A Postman collection for all Tenor GIF API endpoints to search, retrieve, and manage GIFs and stickers.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search GIFs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/search?q=funny+cat&key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US&contentfilter=medium",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "funny+cat",
+                  "description": "Search term"
+                },
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                },
+                {
+                  "key": "contentfilter",
+                  "value": "medium",
+                  "description": "Content safety rating (off, low, medium, high)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of GIFs for a given search term, category, or emoji. Use searchfilter=sticker for stickers."
+          }
+        },
+        {
+          "name": "Search Stickers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/search?q=funny+cat&key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US&contentfilter=medium&searchfilter=sticker",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "funny+cat",
+                  "description": "Search term"
+                },
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                },
+                {
+                  "key": "contentfilter",
+                  "value": "medium",
+                  "description": "Content safety rating (off, low, medium, high)"
+                },
+                {
+                  "key": "searchfilter",
+                  "value": "sticker",
+                  "description": "Filter to return stickers instead of GIFs"
+                }
+              ]
+            },
+            "description": "Retrieve a list of stickers for a given search term. Includes transparent formats in media_formats."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Featured",
+      "item": [
+        {
+          "name": "Featured GIFs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/featured?key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US&contentfilter=medium",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "featured"],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                },
+                {
+                  "key": "contentfilter",
+                  "value": "medium",
+                  "description": "Content safety rating (off, low, medium, high)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of current global featured GIFs, updated regularly by Tenor."
+          }
+        },
+        {
+          "name": "Featured Stickers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/featured?key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US&contentfilter=medium&searchfilter=sticker",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "featured"],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                },
+                {
+                  "key": "contentfilter",
+                  "value": "medium",
+                  "description": "Content safety rating (off, low, medium, high)"
+                },
+                {
+                  "key": "searchfilter",
+                  "value": "sticker",
+                  "description": "Filter to return stickers instead of GIFs"
+                }
+              ]
+            },
+            "description": "Retrieve a list of current global featured stickers."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/categories?key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&type=featured&locale=en_US&contentfilter=medium",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "categories"],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "type",
+                  "value": "featured",
+                  "description": "Category type (featured or trending)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for category name translation"
+                },
+                {
+                  "key": "contentfilter",
+                  "value": "medium",
+                  "description": "Content safety rating (off, low, medium, high)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of GIF categories (featured or trending) with preview GIFs."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Suggestions",
+      "item": [
+        {
+          "name": "Search Suggestions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/search_suggestions?q=funny&key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "search_suggestions"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "funny",
+                  "description": "Partial search term"
+                },
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of suggestions (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                }
+              ]
+            },
+            "description": "Retrieve alternative search terms for a given partial search term."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autocomplete",
+      "item": [
+        {
+          "name": "Autocomplete Terms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/autocomplete?q=fun&key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "autocomplete"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "fun",
+                  "description": "Partial search term"
+                },
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of completions (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                }
+              ]
+            },
+            "description": "Retrieve completed search terms for a partial search term."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trending Terms",
+      "item": [
+        {
+          "name": "Trending Search Terms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/trending_terms?key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&limit=10&locale=en_US",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "trending_terms"],
+              "query": [
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of terms (max 50)"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                }
+              ]
+            },
+            "description": "Retrieve a list of current trending search terms, updated hourly."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Share",
+      "item": [
+        {
+          "name": "Register Share",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/registershare?id=1234567890&q=funny+cat&key=YOUR_API_KEY&client_key=YOUR_CLIENT_KEY&locale=en_US",
+              "protocol": "https",
+              "host": ["tenor", "googleapis", "com"],
+              "path": ["v2", "registershare"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1234567890",
+                  "description": "GIF or sticker ID"
+                },
+                {
+                  "key": "q",
+                  "value": "funny+cat",
+                  "description": "Search term used to find the GIF/sticker"
+                },
+                {
+                  "key": "key",
+                  "value": "YOUR_API_KEY",
+                  "description": "Tenor API key"
+                },
+                {
+                  "key": "client_key",
+                  "value": "YOUR_CLIENT_KEY",
+                  "description": "Unique identifier for your app"
+                },
+                {
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for search tuning"
+                }
+              ]
+            },
+            "description": "Register a user's sharing of a GIF or sticker to tune Tenor's search AI."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://tenor.googleapis.com/v2",
+      "description": "Base URL for Tenor API v2"
+    }
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "info": {
+    "_postman_id": "b8c9d1e2-f30c-42e5-a817-557766550002",
+    "name": "Pexels API Collection",
+    "description": "A Postman collection for all Pexels API endpoints to interact with photos, videos, and collections.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Photos",
+      "item": [
+        {
+          "name": "Search Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/search?query=mountains&page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "mountains",
+                  "description": "Search term"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Search for photos based on a query. Supports parameters like orientation, size, color, and locale."
+          }
+        },
+        {
+          "name": "Curated Photos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/curated?page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "curated"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Retrieve real-time curated photos selected by the Pexels team."
+          }
+        },
+        {
+          "name": "Get Photo by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/photos/:id",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "photos", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123456",
+                  "description": "Photo ID"
+                }
+              ]
+            },
+            "description": "Retrieve details for a specific photo by its ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "Search Videos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/videos/search?query=nature&page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["videos", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "nature",
+                  "description": "Search term"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Search for videos based on a query. Supports parameters like orientation, size, and locale."
+          }
+        },
+        {
+          "name": "Popular Videos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/videos/popular?page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["videos", "popular"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of popular videos on Pexels."
+          }
+        },
+        {
+          "name": "Get Video by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/videos/videos/:id",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["videos", "videos", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123456",
+                  "description": "Video ID"
+                }
+              ]
+            },
+            "description": "Retrieve details for a specific video by its ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Collections",
+      "item": [
+        {
+          "name": "Featured Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/collections/featured?page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "collections", "featured"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of featured collections on Pexels."
+          }
+        },
+        {
+          "name": "User Collections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/collections?page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "collections"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of the authenticated user's collections."
+          }
+        },
+        {
+          "name": "Get Collection Media",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "YOUR_API_KEY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.pexels.com/v1/collections/:id?type=photos&page=1&per_page=15",
+              "protocol": "https",
+              "host": ["api", "pexels", "com"],
+              "path": ["v1", "collections", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "someid",
+                  "description": "Collection ID"
+                }
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "photos",
+                  "description": "Type of media (photos or videos)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "per_page",
+                  "value": "15",
+                  "description": "Results per page (max 80)"
+                }
+              ]
+            },
+            "description": "Retrieve all media (photos or videos) within a specific collection."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.pexels.com",
+      "description": "Base URL for Pexels API"
+    }
+  ]
+}
