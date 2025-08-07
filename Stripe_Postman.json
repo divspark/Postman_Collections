@@ -1,0 +1,690 @@
+{
+  "info": {
+    "_postman_id": "m7n8o9p1-q2r3-s4t5-u6v7-445566778901",
+    "name": "Stripe API Collection",
+    "description": "A comprehensive Postman collection for Stripe's payment services API, covering key endpoints for Payments, Billing, and more. All requests use the base URL https://api.stripe.com/v1/, require a secret API key (obtain from Stripe Dashboard, e.g., sk_test_...), and use form-encoded request bodies with JSON responses. Supports test mode for safe testing. Covers all major resources as of August 2025, based on official documentation and Stripe's Postman collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PaymentIntents",
+      "item": [
+        {
+          "name": "Create a PaymentIntent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "description": "Amount in cents (e.g., 2000 = $20.00)",
+                  "type": "text"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Currency code (e.g., usd)",
+                  "type": "text"
+                },
+                {
+                  "key": "payment_method_types[]",
+                  "value": "card",
+                  "description": "Payment method (e.g., card)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}payment_intents",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "payment_intents"]
+            },
+            "description": "Create a PaymentIntent to initiate a payment process. Specify amount, currency, and payment method."
+          }
+        },
+        {
+          "name": "Retrieve a PaymentIntent",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payment_intents/pi_123456789",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "payment_intents", "pi_123456789"],
+              "query": [
+                {
+                  "key": "pi_123456789",
+                  "value": "PaymentIntent ID (e.g., pi_123456789)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Retrieve details of a specific PaymentIntent by ID."
+          }
+        },
+        {
+          "name": "Update a PaymentIntent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2500",
+                  "description": "Updated amount in cents (e.g., 2500 = $25.00)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}payment_intents/pi_123456789",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "payment_intents", "pi_123456789"]
+            },
+            "description": "Update a PaymentIntent, e.g., to modify the amount."
+          }
+        },
+        {
+          "name": "List PaymentIntents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payment_intents?limit=10",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "payment_intents"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of records to return (1-100)"
+                }
+              ]
+            },
+            "description": "List all PaymentIntents, with optional limit parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create a Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "customer@example.com",
+                  "description": "Customer email address",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "John Doe",
+                  "description": "Customer name",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}customers",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "customers"]
+            },
+            "description": "Create a customer to associate with payments or subscriptions."
+          }
+        },
+        {
+          "name": "Retrieve a Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}customers/cus_123456789",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "customers", "cus_123456789"]
+            },
+            "description": "Retrieve details of a specific customer by ID."
+          }
+        },
+        {
+          "name": "Update a Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "newemail@example.com",
+                  "description": "Updated customer email",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}customers/cus_123456789",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "customers", "cus_123456789"]
+            },
+            "description": "Update customer details, e.g., email or name."
+          }
+        },
+        {
+          "name": "List Customers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}customers?limit=10",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "customers"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of records to return (1-100)"
+                }
+              ]
+            },
+            "description": "List all customers, with optional limit parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Charges",
+      "item": [
+        {
+          "name": "Create a Charge",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "description": "Amount in cents (e.g., 2000 = $20.00)",
+                  "type": "text"
+                },
+                {
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Currency code (e.g., usd)",
+                  "type": "text"
+                },
+                {
+                  "key": "source",
+                  "value": "tok_visa",
+                  "description": "Payment source (e.g., tok_visa for test mode)",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test charge",
+                  "description": "Description of the charge",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}charges",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "charges"]
+            },
+            "description": "Create a charge for a payment. Requires a payment source (e.g., card token)."
+          }
+        },
+        {
+          "name": "List Charges",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}charges?limit=10",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "charges"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of records to return (1-100)"
+                }
+              ]
+            },
+            "description": "List all charges, with optional limit parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Create a Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "customer",
+                  "value": "cus_123456789",
+                  "description": "Customer ID (e.g., cus_123456789)",
+                  "type": "text"
+                },
+                {
+                  "key": "items[0][price]",
+                  "value": "price_123456789",
+                  "description": "Price ID for the subscription",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}subscriptions",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "subscriptions"]
+            },
+            "description": "Create a subscription for a customer with a specified price."
+          }
+        },
+        {
+          "name": "List Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}subscriptions?limit=10",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "subscriptions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of records to return (1-100)"
+                }
+              ]
+            },
+            "description": "List all subscriptions, with optional limit parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Create a Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "T-shirt",
+                  "description": "Product name",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Comfortable cotton t-shirt",
+                  "description": "Product description",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}products",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "products"]
+            },
+            "description": "Create a product for use in subscriptions or payments."
+          }
+        },
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}products?limit=10",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "products"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of records to return (1-100)"
+                }
+              ]
+            },
+            "description": "List all products, with optional limit parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Checkout Sessions",
+      "item": [
+        {
+          "name": "Create a Checkout Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "success_url",
+                  "value": "https://example.com/success",
+                  "description": "URL for successful payment",
+                  "type": "text"
+                },
+                {
+                  "key": "cancel_url",
+                  "value": "https://example.com/cancel",
+                  "description": "URL for canceled payment",
+                  "type": "text"
+                },
+                {
+                  "key": "payment_method_types[]",
+                  "value": "card",
+                  "description": "Payment method (e.g., card)",
+                  "type": "text"
+                },
+                {
+                  "key": "line_items[0][price]",
+                  "value": "price_123456789",
+                  "description": "Price ID for the item",
+                  "type": "text"
+                },
+                {
+                  "key": "line_items[0][quantity]",
+                  "value": "1",
+                  "description": "Quantity of the item",
+                  "type": "text"
+                },
+                {
+                  "key": "mode",
+                  "value": "payment",
+                  "description": "Mode (payment, subscription, setup)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}checkout/sessions",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "checkout", "sessions"]
+            },
+            "description": "Create a Stripe Checkout session for a payment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refunds",
+      "item": [
+        {
+          "name": "Create a Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "charge",
+                  "value": "ch_123456789",
+                  "description": "Charge ID to refund",
+                  "type": "text"
+                },
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "description": "Amount to refund in cents",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}refunds",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "refunds"]
+            },
+            "description": "Create a refund for a specific charge."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Methods",
+      "item": [
+        {
+          "name": "Attach Payment Method to Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "customer",
+                  "value": "cus_123456789",
+                  "description": "Customer ID",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}payment_methods/pm_123456789/attach",
+              "protocol": "https",
+              "host": ["api", "stripe", "com"],
+              "path": ["v1", "payment_methods", "pm_123456789", "attach"]
+            },
+            "description": "Attach a payment method to a customer for future use."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.stripe.com/v1/",
+      "type": "string",
+      "description": "Base URL for Stripe API"
+    },
+    {
+      "key": "secret_key",
+      "value": "sk_test_YOUR_SECRET_KEY",
+      "type": "string",
+      "description": "Your Stripe test mode secret API key"
+    }
+  ]
+}

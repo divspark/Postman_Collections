@@ -1,0 +1,368 @@
+{
+  "info": {
+    "_postman_id": "k5l6m7n8-o0p1-09q3-h684-334455440009",
+    "name": "OMDb API Collection",
+    "description": "A complete Postman collection for the Open Movie Database (OMDb) API to retrieve movie, series, and episode information. All requests use the single endpoint http://www.omdbapi.com/ with varying query parameters. Requires an API key (free keys at http://www.omdbapi.com/apikey.aspx, 1,000 daily limit). Covers all documented functionalities as of August 2025, including search, title lookup, IMDb ID lookup, season episodes, and parameter combinations for year, type, and plot.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Movies/Series",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&s=batman&type=movie&page=1",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "s",
+              "value": "batman",
+              "description": "Search term (e.g., batman)"
+            },
+            {
+              "key": "type",
+              "value": "movie",
+              "description": "Content type (movie, series, episode)"
+            },
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Page number for pagination (1-100)"
+            }
+          ]
+        },
+        "description": "Search for movies, series, or episodes by term. Returns up to 10 results per page, with pagination support (max 100 pages). Use 'type' to filter results."
+      }
+    },
+    {
+      "name": "Lookup by Title",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&t=Inception&plot=short&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "t",
+              "value": "Inception",
+              "description": "Movie or series title (e.g., Inception)"
+            },
+            {
+              "key": "plot",
+              "value": "short",
+              "description": "Plot length (short, full)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Retrieve details for a specific movie or series by title. Includes title, plot, actors, ratings, and more. Specify 'plot' for short or full description."
+      }
+    },
+    {
+      "name": "Lookup by IMDb ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&i=tt1375666&plot=full&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "i",
+              "value": "tt1375666",
+              "description": "IMDb ID (e.g., tt1375666 for Inception)"
+            },
+            {
+              "key": "plot",
+              "value": "full",
+              "description": "Plot length (short, full)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Retrieve details for a specific movie or series by IMDb ID. Returns precise results with title, plot, actors, ratings, and more."
+      }
+    },
+    {
+      "name": "Get Season Episodes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&t=Game of Thrones&Season=1&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "t",
+              "value": "Game of Thrones",
+              "description": "Series title (e.g., Game of Thrones)"
+            },
+            {
+              "key": "Season",
+              "value": "1",
+              "description": "Season number (e.g., 1)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Retrieve all episodes for a specific season of a series. Requires series title and season number."
+      }
+    },
+    {
+      "name": "Search with Year Filter",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&s=batman&y=2008&type=movie&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "s",
+              "value": "batman",
+              "description": "Search term (e.g., batman)"
+            },
+            {
+              "key": "y",
+              "value": "2008",
+              "description": "Release year (e.g., 2008)"
+            },
+            {
+              "key": "type",
+              "value": "movie",
+              "description": "Content type (movie, series, episode)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Search for movies or series by term with a specific release year filter. Useful for narrowing down results."
+      }
+    },
+    {
+      "name": "Lookup by Title with Year",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&t=The Matrix&y=1999&plot=short&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "t",
+              "value": "The Matrix",
+              "description": "Movie or series title (e.g., The Matrix)"
+            },
+            {
+              "key": "y",
+              "value": "1999",
+              "description": "Release year (e.g., 1999)"
+            },
+            {
+              "key": "plot",
+              "value": "short",
+              "description": "Plot length (short, full)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Retrieve details for a specific movie or series by title and year. Useful for disambiguating titles with the same name."
+      }
+    },
+    {
+      "name": "Search with Type and Plot",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}?apikey={{api_key}}&s=star wars&type=series&plot=full&r=json",
+          "protocol": "http",
+          "host": ["www", "omdbapi", "com"],
+          "path": [""],
+          "query": [
+            {
+              "key": "apikey",
+              "value": "{{api_key}}",
+              "description": "Your OMDb API key"
+            },
+            {
+              "key": "s",
+              "value": "star wars",
+              "description": "Search term (e.g., star wars)"
+            },
+            {
+              "key": "type",
+              "value": "series",
+              "description": "Content type (movie, series, episode)"
+            },
+            {
+              "key": "plot",
+              "value": "full",
+              "description": "Plot length (short, full)"
+            },
+            {
+              "key": "r",
+              "value": "json",
+              "description": "Response format (json, xml)"
+            }
+          ]
+        },
+        "description": "Search for movies, series, or episodes by term with specific type and full plot details. Useful for detailed search results."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://www.omdbapi.com/",
+      "type": "string",
+      "description": "Base URL for OMDb API"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY",
+      "type": "string",
+      "description": "Your OMDb API key"
+    }
+  ]
+}

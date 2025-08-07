@@ -1,0 +1,797 @@
+{
+  "info": {
+    "_postman_id": "p8q9r0s1-t2u3-v4w5-x6y7-556677889012",
+    "name": "Razorpay API Collection",
+    "description": "A comprehensive Postman collection for Razorpay's payment gateway APIs, covering Payments, Orders, Customers, Invoices, Subscriptions, Payment Links, and RazorpayX Payouts. Uses https://api.razorpay.com/v1/ for most endpoints, with v2 for Route. Requires Basic Authentication with Base64-encoded API key (key_id:key_secret) from Razorpay Dashboard. Supports test mode for safe testing. All responses are JSON. Covers all major public APIs as of August 2025, based on official documentation and Razorpay Postman Public Workspace.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Capture a Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "description": "Amount in paise (e.g., 2000 = INR 20.00)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}payments/pay_123456789/capture",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payments", "pay_123456789", "capture"]
+            },
+            "description": "Capture an authorized payment by ID. Requires amount in paise."
+          }
+        },
+        {
+          "name": "Fetch a Payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payments/pay_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payments", "pay_123456789"]
+            },
+            "description": "Retrieve details of a specific payment by ID."
+          }
+        },
+        {
+          "name": "Fetch All Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payments?count=10&skip=0",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payments"],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "10",
+                  "description": "Number of records to fetch (default 10)"
+                },
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of records to skip (default 0)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of all payments with pagination."
+          }
+        },
+        {
+          "name": "Fetch Payments with Card Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payments?expand[]=card&count=10",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payments"],
+              "query": [
+                {
+                  "key": "expand[]",
+                  "value": "card",
+                  "description": "Expand card details in response"
+                },
+                {
+                  "key": "count",
+                  "value": "10",
+                  "description": "Number of records to fetch (default 10)"
+                }
+              ]
+            },
+            "description": "Retrieve all payments with expanded card details."
+          }
+        },
+        {
+          "name": "Refund a Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "2000",
+                  "description": "Amount to refund in paise",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}payments/pay_123456789/refund",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payments", "pay_123456789", "refund"]
+            },
+            "description": "Initiate a refund for a specific payment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create an Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"amount\": 2000, \"currency\": \"INR\", \"receipt\": \"receipt#1\", \"notes\": {\"key\": \"value\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}orders",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "orders"]
+            },
+            "description": "Create an order with amount, currency, and optional notes."
+          }
+        },
+        {
+          "name": "Fetch an Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}orders/order_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "orders", "order_123456789"]
+            },
+            "description": "Retrieve details of a specific order by ID."
+          }
+        },
+        {
+          "name": "Fetch All Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}orders?count=10&skip=0",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "orders"],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "10",
+                  "description": "Number of records to fetch (default 10)"
+                },
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of records to skip (default 0)"
+                }
+              ]
+            },
+            "description": "Retrieve a list of all orders with pagination."
+          }
+        },
+        {
+          "name": "Fetch Payments for an Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}orders/order_123456789/payments",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "orders", "order_123456789", "payments"]
+            },
+            "description": "Retrieve all payments linked to a specific order."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create a Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"contact\": \"+919876543210\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}customers",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "customers"]
+            },
+            "description": "Create a customer with name, email, and contact details."
+          }
+        },
+        {
+          "name": "Fetch a Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}customers/cust_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "customers", "cust_123456789"]
+            },
+            "description": "Retrieve details of a specific customer by ID."
+          }
+        },
+        {
+          "name": "Update a Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"newemail@example.com\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}customers/cust_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "customers", "cust_123456789"]
+            },
+            "description": "Update customer details, e.g., email or contact."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Create an Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"type\": \"invoice\", \"customer_id\": \"cust_123456789\", \"amount\": 2000, \"currency\": \"INR\", \"description\": \"Test invoice\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}invoices",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "invoices"]
+            },
+            "description": "Create an invoice for a customer with amount and currency."
+          }
+        },
+        {
+          "name": "Fetch an Invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}invoices/inv_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "invoices", "inv_123456789"]
+            },
+            "description": "Retrieve details of a specific invoice by ID."
+          }
+        },
+        {
+          "name": "Cancel an Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{base_url}}invoices/inv_123456789/cancel",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "invoices", "inv_123456789", "cancel"]
+            },
+            "description": "Cancel a specific invoice by ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Create a Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"plan_id\": \"plan_123456789\", \"customer_id\": \"cust_123456789\", \"total_count\": 6}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}subscriptions",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "subscriptions"]
+            },
+            "description": "Create a subscription for a customer with a plan ID."
+          }
+        },
+        {
+          "name": "Fetch a Subscription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}subscriptions/sub_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "subscriptions", "sub_123456789"]
+            },
+            "description": "Retrieve details of a specific subscription by ID."
+          }
+        },
+        {
+          "name": "Cancel a Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{base_url}}subscriptions/sub_123456789/cancel",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "subscriptions", "sub_123456789", "cancel"]
+            },
+            "description": "Cancel a specific subscription by ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Links",
+      "item": [
+        {
+          "name": "Create a Payment Link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"amount\": 2000, \"currency\": \"INR\", \"description\": \"Test payment link\", \"customer\": {\"name\": \"John Doe\", \"email\": \"john@example.com\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}payment_links",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payment_links"]
+            },
+            "description": "Create a payment link for a customer."
+          }
+        },
+        {
+          "name": "Fetch a Payment Link",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payment_links/plink_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payment_links", "plink_123456789"]
+            },
+            "description": "Retrieve details of a specific payment link by ID."
+          }
+        },
+        {
+          "name": "Cancel a Payment Link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{base_url}}payment_links/plink_123456789/cancel",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payment_links", "plink_123456789", "cancel"]
+            },
+            "description": "Cancel a specific payment link by ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refunds",
+      "item": [
+        {
+          "name": "Create a Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"payment_id\": \"pay_123456789\", \"amount\": 2000}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}refunds",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "refunds"]
+            },
+            "description": "Create a refund for a specific payment."
+          }
+        },
+        {
+          "name": "Fetch a Refund",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}refunds/ref_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "refunds", "ref_123456789"]
+            },
+            "description": "Retrieve details of a specific refund by ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payouts (RazorpayX)",
+      "item": [
+        {
+          "name": "Create a Payout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"account_number\": \"acc_123456789\", \"amount\": 2000, \"currency\": \"INR\", \"mode\": \"NEFT\", \"purpose\": \"payout\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}payouts",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payouts"]
+            },
+            "description": "Create a payout to a bank account via RazorpayX."
+          }
+        },
+        {
+          "name": "Fetch a Payout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}payouts/pout_123456789",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "payouts", "pout_123456789"]
+            },
+            "description": "Retrieve details of a specific payout by ID."
+          }
+        },
+        {
+          "name": "Fetch Account Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}balance",
+              "protocol": "https",
+              "host": ["api", "razorpay", "com"],
+              "path": ["v1", "balance"]
+            },
+            "description": "Fetch the balance of the RazorpayX account."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.razorpay.com/v1/",
+      "type": "string",
+      "description": "Base URL for most Razorpay APIs"
+    },
+    {
+      "key": "route_base_url",
+      "value": "https://api.razorpay.com/v2/",
+      "type": "string",
+      "description": "Base URL for Razorpay Route APIs"
+    },
+    {
+      "key": "auth_token",
+      "value": "YOUR_BASE64_ENCODED_KEY_ID:KEY_SECRET",
+      "type": "string",
+      "description": "Base64-encoded key_id:key_secret for Basic Auth"
+    }
+  ]
+}
